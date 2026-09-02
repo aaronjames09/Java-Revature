@@ -1,12 +1,12 @@
-# Bank of CLI
+# Project : Bank of CLI
 
-A Java-based command-line banking application built with a focus on secure account management, transactional integrity, database persistence, and layered architecture.
+A Java-based banking application built with a focus on secure account management, transactional integrity, database persistence and layered architecture.
 
 ## 📋 Overview
 
 **Bank of CLI** is a terminal-based banking application designed to simulate the core functionality of a banking system.
 
-The project demonstrates the use of **Java, SQL, Maven, PostgreSQL, JUnit 5, Git, and GitHub** while following a layered architecture that separates the user interface, business logic, and database operations.
+The project demonstrates the use of **Java, SQL, Maven, PostgreSQL, JUnit 5, Git and GitHub** while following a layered architecture that separates the user interface, business logic and database operations.
 
 The goal is to build a reliable **Core Ledger** capable of managing accounts and financial transactions while maintaining an audit trail and system logs.
 
@@ -46,7 +46,7 @@ Remove funds from an account while preventing overdrafts.
 
 Securely transfer funds between two different accounts.
 
-Transfers must be **atomic**, meaning the entire transaction succeeds or fails as one unit. Money must never be deducted from one account without being successfully added to the destination account.
+Transfers are **atomic**, meaning the entire transaction succeeds or fails as one unit. Money must never be deducted from one account without being successfully added to the destination account.
 
 ### 📜 Audit Trail
 
@@ -63,7 +63,7 @@ The application will maintain a log file to track system activity.
 Two logging levels are required:
 
 * `INFO` — Records successful operations such as successful logins and completed transactions.
-* `ERROR` — Records failures, invalid operations, security risks, or system problems such as incorrect PIN attempts or database connection failures.
+* `ERROR` — Records failures, invalid operations, security risks or system problems such as incorrect PIN attempts or database connection failures.
 
 ---
 
@@ -333,24 +333,24 @@ The exact run command will be added once the application's entry point has been 
 
 Current focus:
 
-* [ ] Project setup
-* [ ] Maven configuration
-* [ ] PostgreSQL database setup
-* [ ] Database schema
-* [ ] Repository layer
-* [ ] Service layer
-* [ ] API / CLI layer
-* [ ] User registration
-* [ ] User authentication
-* [ ] Balance management
-* [ ] Deposits
-* [ ] Withdrawals
-* [ ] Transfers
-* [ ] Transaction history
-* [ ] System logging
-* [ ] JUnit 5 testing
-* [ ] Error handling
-* [ ] Final integration testing
+Project setup
+Maven configuration
+PostgreSQL database setup
+Database schema
+Repository layer
+Service layer
+API / CLI layer
+User registration
+User authentication
+Balance management
+Deposits
+Withdrawals
+Transfers
+Transaction history
+System logging
+JUnit 5 testing
+Error handling
+Final integration testing
 
 ---
 
@@ -369,9 +369,3 @@ This project is intended to demonstrate practical experience with:
 * Logging
 * Git version control
 * Agile development practices
-
----
-
-## 📄 License
-
-This project is being developed as part of a Java/Revature training project.
