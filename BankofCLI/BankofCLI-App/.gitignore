@@ -1,0 +1,12 @@
+target/
+logs/*.log
+*.class
+
+# Real credentials - never commit these, only the .example templates
+src/main/resources/application.properties
+src/test/resources/application-test.properties
+
+.idea/
+*.iml
+.vscode/
+.DS_Store

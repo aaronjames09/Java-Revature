@@ -1,0 +1,12 @@
+2026-09-13 00:49:33 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-13 00:49:46 [INFO] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Created account id=1
+2026-09-13 00:49:46 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Registered new account id=1 for 'aaron j'
+2026-09-13 00:50:04 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=1
+2026-09-13 00:50:11 [WARNING] com.aaronjames.bankofcli.service.AccountServiceImpl - Rejected overdraft attempt on account id=1: balance=100.00, requested=2443
+2026-09-13 00:50:11 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-13 00:50:29 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-13 00:50:40 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-13 00:50:43 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
+2026-09-13 00:50:46 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-13 00:50:49 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=1
+2026-09-13 00:50:54 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
