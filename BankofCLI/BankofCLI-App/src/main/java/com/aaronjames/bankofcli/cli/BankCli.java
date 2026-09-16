@@ -7,10 +7,8 @@ import com.aaronjames.bankofcli.model.TransactionRecord;
 import com.aaronjames.bankofcli.service.AccountService;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
+import java.util.logging.*;
 
 /**
  * The "API Layer" from the spec: reads terminal input, prints menus and
@@ -69,8 +67,7 @@ public class BankCli {
             BigDecimal openingDeposit = readAmount();
 
             Account account = accountService.register(name, pin, openingDeposit);
-            System.out.println("Account created! Your Account ID is " + account.getAccountId()
-                    + " - keep this safe, you'll need it to log in.");
+            System.out.println("Account created! Your Account ID is " + account.getAccountId());
         });
     }
 

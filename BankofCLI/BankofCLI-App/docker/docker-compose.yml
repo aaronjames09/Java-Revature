@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: bankofcli-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bankofcli
+      POSTGRES_USER: bankofcli_user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - bankofcli_pgdata:/var/lib/postgresql
+      - ../src/main/resources/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+
+volumes:
+  bankofcli_pgdata:

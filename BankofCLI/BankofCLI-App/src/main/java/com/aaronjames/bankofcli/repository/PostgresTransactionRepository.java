@@ -4,14 +4,8 @@ import com.aaronjames.bankofcli.exception.DataAccessException;
 import com.aaronjames.bankofcli.model.TransactionRecord;
 import com.aaronjames.bankofcli.model.TransactionType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,8 +63,8 @@ public class PostgresTransactionRepository implements TransactionRepository {
         }
 
         String sql = "SELECT transaction_id, account_id, related_account_id, transaction_type, "
-                + "amount, balance_after, created_at "
-                + "FROM transactions WHERE account_id = ? ORDER BY created_at DESC, transaction_id DESC LIMIT ?";
+                + "amount, balance_after "
+                + "FROM transactions WHERE account_id = ? ORDER BY transaction_id DESC LIMIT ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, accountId);

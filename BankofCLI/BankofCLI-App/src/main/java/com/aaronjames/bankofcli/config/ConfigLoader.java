@@ -4,22 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * Reads a properties file from the classpath and turns it into a
- * DatabaseConfig. This is the ONLY class that knows the config lives in a
- * properties file - if that ever changes (env vars, a vault, etc), only
- * this class needs to change (Single Responsibility / easy to extend).
- */
 public final class ConfigLoader {
 
     private ConfigLoader() {
-        // utility class - no instances
     }
 
-    /**
-     * @param resourceName e.g. "application.properties" or "application-test.properties"
-     * @throws ConfigurationException if the file is missing or unreadable
-     */
     public static DatabaseConfig loadDatabaseConfig(String resourceName) {
         Properties properties = new Properties();
 
@@ -38,7 +27,6 @@ public final class ConfigLoader {
         String url = requireProperty(properties, "db.url", resourceName);
         String username = requireProperty(properties, "db.username", resourceName);
         String password = requireProperty(properties, "db.password", resourceName);
-
         return new DatabaseConfig(url, username, password);
     }
 
@@ -50,7 +38,6 @@ public final class ConfigLoader {
         return value;
     }
 
-    /** Thrown when configuration is missing or invalid. Caught at startup, never leaked to the end user. */
     public static class ConfigurationException extends RuntimeException {
         public ConfigurationException(String message) {
             super(message);
