@@ -1,7 +1,6 @@
 package com.aaronjames.bankofcli.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -12,18 +11,15 @@ public class Account {
 
     private Long accountId;
     private String accountHolder;
-    private String pinHash;
-    private String pinSalt;
+    private String pin;
     private BigDecimal balance;
-    private Timestamp createdAt;
 
     public Account() {
     }
 
-    public Account(String accountHolder, String pinHash, String pinSalt, BigDecimal balance) {
+    public Account(String accountHolder, String pin, BigDecimal balance) {
         this.accountHolder = accountHolder;
-        this.pinHash = pinHash;
-        this.pinSalt = pinSalt;
+        this.pin = pin;
         this.balance = balance;
     }
 
@@ -43,20 +39,12 @@ public class Account {
         this.accountHolder = accountHolder;
     }
 
-    public String getPinHash() {
-        return pinHash;
+    public String getPin() {
+        return pin;
     }
 
-    public void setPinHash(String pinHash) {
-        this.pinHash = pinHash;
-    }
-
-    public String getPinSalt() {
-        return pinSalt;
-    }
-
-    public void setPinSalt(String pinSalt) {
-        this.pinSalt = pinSalt;
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 
     public BigDecimal getBalance() {
@@ -65,14 +53,6 @@ public class Account {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
     }
 
     @Override

@@ -32,15 +32,14 @@ public class PostgresAccountRepository implements AccountRepository {
             throw new IllegalArgumentException("account must not be null");
         }
 
-        String sql = "INSERT INTO accounts (account_holder, pin_hash, pin_salt, balance) "
-                + "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO accounts (account_holder, pin, balance) "
+                + "VALUES (?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, account.getAccountHolder());
-            statement.setString(2, account.getPinHash());
-            statement.setString(3, account.getPinSalt());
-            statement.setBigDecimal(4, account.getBalance());
+            statement.setString(2, account.getPin());
+            statement.setBigDecimal(3, account.getBalance());
             statement.executeUpdate();
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -64,7 +63,7 @@ public class PostgresAccountRepository implements AccountRepository {
             throw new IllegalArgumentException("accountId must not be null");
         }
 
-        String sql = "SELECT account_id, account_holder, pin_hash, pin_salt, balance, created_at "
+        String sql = "SELECT account_id, account_holder, pin, balance "
                 + "FROM accounts WHERE account_id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -117,10 +116,8 @@ public class PostgresAccountRepository implements AccountRepository {
         Account account = new Account();
         account.setAccountId(resultSet.getLong("account_id"));
         account.setAccountHolder(resultSet.getString("account_holder"));
-        account.setPinHash(resultSet.getString("pin_hash"));
-        account.setPinSalt(resultSet.getString("pin_salt"));
+        account.setPin(resultSet.getString("pin"));
         account.setBalance(resultSet.getBigDecimal("balance"));
-        account.setCreatedAt(resultSet.getTimestamp("created_at"));
         return account;
     }
 }

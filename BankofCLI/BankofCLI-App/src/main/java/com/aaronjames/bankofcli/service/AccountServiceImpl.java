@@ -10,7 +10,6 @@ import com.aaronjames.bankofcli.model.TransactionRecord;
 import com.aaronjames.bankofcli.model.TransactionType;
 import com.aaronjames.bankofcli.repository.AccountRepository;
 import com.aaronjames.bankofcli.repository.TransactionRepository;
-import com.aaronjames.bankofcli.util.PinHasher;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -59,9 +58,7 @@ public class AccountServiceImpl implements AccountService {
             throw new IllegalArgumentException("Initial deposit must not be negative");
         }
 
-        String salt = PinHasher.generateSalt();
-        String hash = PinHasher.hash(pin, salt);
-        Account account = new Account(accountHolder, hash, salt, initialDeposit);
+        Account account = new Account(accountHolder, pin, initialDeposit);
 
         Account saved = transactionManager.executeInTransaction(connection ->
                 accountRepository.save(account, connection));
@@ -75,7 +72,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = transactionManager.executeInTransaction(connection ->
                 requireAccount(accountId, connection));
 
-        if (!PinHasher.matches(pin, account.getPinSalt(), account.getPinHash())) {
+        if (!pin.equals(account.getPin())) {
             LOGGER.warning("Incorrect PIN attempt for account id=" + accountId);
             throw new InvalidPinException();
         }

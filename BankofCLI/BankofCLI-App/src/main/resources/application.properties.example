@@ -1,7 +1,0 @@
-# Copy this file to "application.properties" (same folder) and fill in your
-# real local PostgreSQL details. application.properties is gitignored so your
-# credentials never get committed.
-
-db.url=jdbc:postgresql://localhost:5432/bankofcli
-db.username=your_postgres_username
-db.password=your_postgres_password

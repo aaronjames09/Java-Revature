@@ -10,3 +10,39 @@
 2026-09-13 00:50:46 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
 2026-09-13 00:50:49 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=1
 2026-09-13 00:50:54 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
+2026-09-15 23:21:08 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-15 23:21:12 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-15 23:21:24 [SEVERE] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Failed to save account for holder 'aaron j'
+2026-09-15 23:21:24 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-15 23:21:24 [SEVERE] com.aaronjames.bankofcli.cli.BankCli - Database operation failed
+2026-09-15 23:21:38 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-15 23:21:50 [SEVERE] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Failed to save account for holder 'aaron'
+2026-09-15 23:21:50 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-15 23:21:50 [SEVERE] com.aaronjames.bankofcli.cli.BankCli - Database operation failed
+2026-09-15 23:28:39 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
+2026-09-15 23:28:47 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-15 23:28:54 [SEVERE] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Failed to save account for holder 'aaron'
+2026-09-15 23:28:54 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-15 23:28:54 [SEVERE] com.aaronjames.bankofcli.cli.BankCli - Database operation failed
+2026-09-15 23:29:00 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-15 23:29:52 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
+2026-09-15 23:29:59 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-15 23:30:05 [SEVERE] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Failed to save account for holder 'aaron'
+2026-09-15 23:30:05 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-15 23:30:05 [SEVERE] com.aaronjames.bankofcli.cli.BankCli - Database operation failed
+2026-09-15 23:30:11 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-15 23:36:54 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
+2026-09-15 23:37:01 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-15 23:37:08 [INFO] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Created account id=1
+2026-09-15 23:37:08 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Registered new account id=1 for 'aaron'
+2026-09-15 23:37:40 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=1
+2026-09-15 23:37:45 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
+2026-09-15 23:37:48 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-15 23:37:50 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=1
+2026-09-15 23:37:56 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
+2026-09-15 23:42:31 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-15 23:42:34 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=1
+2026-09-15 23:42:39 [INFO] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Updated balance for account id=1 to 120.00
+2026-09-15 23:42:39 [INFO] com.aaronjames.bankofcli.repository.PostgresTransactionRepository - Recorded DEPOSIT for account id=1 amount=20
+2026-09-15 23:42:39 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Deposited 20 into account id=1, new balance=120.00
+2026-09-15 23:42:44 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down

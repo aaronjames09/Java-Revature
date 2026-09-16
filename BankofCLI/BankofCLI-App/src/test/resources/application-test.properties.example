@@ -1,7 +1,0 @@
-# Copy this file to "application-test.properties" (same folder) and point it
-# at a SEPARATE local database used only for running tests (e.g. bankofcli_test).
-# Tests truncate tables between runs - never point this at your real dev data.
-
-db.url=jdbc:postgresql://localhost:5432/bankofcli_test
-db.username=your_postgres_username
-db.password=your_postgres_password

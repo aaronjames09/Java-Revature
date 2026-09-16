@@ -6,7 +6,7 @@ A Java-based banking application built with a focus on secure account management
 
 **Bank of CLI** is a terminal-based banking application designed to simulate the core functionality of a banking system.
 
-The project demonstrates the use of **Java, SQL, Maven, PostgreSQL, JUnit 5, Git and GitHub** while following a layered architecture that separates the user interface, business logic and database operations.
+The project demonstrates the use of **Java, SQL, Maven, PostgreSQL, Git and GitHub** while following a layered architecture that separates the user interface, business logic and database operations.
 
 The goal is to build a reliable **Core Ledger** capable of managing accounts and financial transactions while maintaining an audit trail and system logs.
 
@@ -153,41 +153,8 @@ The Repository Layer **only receives requests from the Service Layer**.
 | **Java**       | Application development         |
 | **Maven**      | Build and dependency management |
 | **PostgreSQL** | Persistent database             |
-| **JUnit 5**    | Automated testing               |
 | **Git**        | Version control                 |
 | **GitHub**     | Remote repository               |
-
----
-
-## 🧪 Testing Requirements
-
-Bank of CLI follows a **"2-Test Rule"** for methods in the Service and Repository layers.
-
-Every method must have at least two JUnit 5 tests:
-
-### ✅ Positive Test
-
-Verifies that the method behaves correctly when the operation succeeds.
-
-Example:
-
-```text
-Deposit $100 into an account
-Expected result: Account balance increases by $100
-```
-
-### ❌ Negative Test
-
-Verifies that the method handles invalid or unsuccessful operations correctly.
-
-Example:
-
-```text
-Withdraw more money than the account contains
-Expected result: Withdrawal is rejected and the balance remains unchanged
-```
-
-This testing approach helps ensure that both expected behavior and error handling are verified.
 
 ---
 
@@ -348,7 +315,6 @@ Withdrawals
 Transfers
 Transaction history
 System logging
-JUnit 5 testing
 Error handling
 Final integration testing
 
@@ -363,7 +329,6 @@ This project is intended to demonstrate practical experience with:
 * JDBC and SQL
 * PostgreSQL database integration
 * Maven project management
-* Unit testing with JUnit 5
 * Exception and error handling
 * Database transactions
 * Logging

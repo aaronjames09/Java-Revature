@@ -175,8 +175,8 @@ public class BankCli {
             }
             System.out.println("Recent transactions:");
             for (TransactionRecord record : history) {
-                System.out.println("  " + record.getCreatedAt() + "  " + record.getType()
-                        + "  amount=" + record.getAmount() + "  balance after=" + record.getBalanceAfter());
+                System.out.println("  " + record.getType() + "  amount=" 
+                + record.getAmount() + "  balance after=" + record.getBalanceAfter());
             }
         });
     }

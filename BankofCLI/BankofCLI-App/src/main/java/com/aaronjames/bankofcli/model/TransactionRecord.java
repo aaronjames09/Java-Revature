@@ -1,7 +1,6 @@
 package com.aaronjames.bankofcli.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 /**
  * Plain domain object representing a row in the "transactions" table -
@@ -15,7 +14,6 @@ public class TransactionRecord {
     private TransactionType type;
     private BigDecimal amount;
     private BigDecimal balanceAfter;
-    private Timestamp createdAt;
 
     public TransactionRecord() {
     }
@@ -75,14 +73,6 @@ public class TransactionRecord {
 
     public void setBalanceAfter(BigDecimal balanceAfter) {
         this.balanceAfter = balanceAfter;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
     }
 
     @Override

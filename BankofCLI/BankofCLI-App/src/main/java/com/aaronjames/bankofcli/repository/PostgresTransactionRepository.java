@@ -101,7 +101,6 @@ public class PostgresTransactionRepository implements TransactionRepository {
         record.setType(TransactionType.valueOf(resultSet.getString("transaction_type")));
         record.setAmount(resultSet.getBigDecimal("amount"));
         record.setBalanceAfter(resultSet.getBigDecimal("balance_after"));
-        record.setCreatedAt(resultSet.getTimestamp("created_at"));
         return record;
     }
 }

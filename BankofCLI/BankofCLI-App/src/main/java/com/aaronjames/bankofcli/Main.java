@@ -22,14 +22,6 @@ import java.util.Scanner;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-/**
- * Application entry point and composition root.
- *
- * This is the ONLY class that knows about every layer at once and wires
- * them together. Every other class depends on interfaces (AccountRepository,
- * TransactionManager, AccountService, ...) and never instantiates its own
- * dependencies - that happens here, once, at startup.
- */
 public final class Main {
 
     private Main() {
@@ -43,8 +35,6 @@ public final class Main {
         try {
             databaseConfig = ConfigLoader.loadDatabaseConfig("application.properties");
         } catch (ConfigLoader.ConfigurationException e) {
-            // Config problems happen before we're "in" the app yet - fine to show the
-            // technical detail directly here, there's no end user session to protect.
             System.out.println("Startup failed: " + e.getMessage());
             return;
         }
@@ -75,8 +65,6 @@ public final class Main {
                 }
             }
         } catch (IOException e) {
-            // Logging config failing shouldn't crash the whole app - it'll just fall back
-            // to the JVM's default console logging instead of writing to logs/bank-of-cli.log.
             System.out.println("Warning: could not load logging configuration (" + e.getMessage() + ")");
         }
     }
