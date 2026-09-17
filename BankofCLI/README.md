@@ -1,336 +1,198 @@
-# Project : Bank of CLI
+# Bank of CLI
 
-A Java-based banking application built with a focus on secure account management, transactional integrity, database persistence and layered architecture.
+A terminal-based Java banking application with a layered architecture, atomic money transfers, an audit trail, and system logging — backed by PostgreSQL.
 
-## 📋 Overview
+## Overview
 
-**Bank of CLI** is a terminal-based banking application designed to simulate the core functionality of a banking system.
+**Bank of CLI** simulates the core functionality of a banking system: registering accounts, authenticating with a PIN, and performing deposits, withdrawals, and transfers, all recorded in a transaction history.
 
-The project demonstrates the use of **Java, SQL, Maven, PostgreSQL, Git and GitHub** while following a layered architecture that separates the user interface, business logic and database operations.
+The project demonstrates **Java, JDBC, PostgreSQL, Maven, Git, and GitHub**, built around a strict layered architecture that keeps the terminal UI, business rules, and database access fully separate from each other.
 
-The goal is to build a reliable **Core Ledger** capable of managing accounts and financial transactions while maintaining an audit trail and system logs.
+## Status
 
----
+**MVP complete.** Register, login, balance check, deposit, withdraw, transfer, and transaction history all work end-to-end against a running PostgreSQL database.
 
-## 🎯 MVP Features
+## Features
 
-### 🔐 Secure Access
+- **Register** a new account with a full name, a 4-digit PIN, and an opening deposit
+- **Log in** using an Account ID and PIN
+- **Check balance** at any time while logged in
+- **Deposit** funds
+- **Withdraw** funds, with overdrafts rejected
+- **Transfer** funds between two accounts — atomic, so a transfer either fully succeeds or leaves both accounts untouched
+- **Transaction history** — the 10 most recent deposits, withdrawals, and transfers for the logged-in account
+- **System logging** — INFO for successful operations, SEVERE for failures, written to `logs/bank-of-cli.log.0`
 
-Users will be able to:
-
-* Register a new account
-* Log in using a unique **Account ID**
-* Authenticate using a **PIN**
-* Receive user-friendly messages when authentication fails
-
-### 💰 Balance Management
-
-Authenticated users will be able to:
-
-* View their current account balance
-* Access their balance at any time through the CLI
-
-### 💳 Transaction Engine
-
-The application will support:
-
-#### Deposit
-
-Add funds to an account.
-
-#### Withdraw
-
-Remove funds from an account while preventing overdrafts.
-
-#### Transfer
-
-Securely transfer funds between two different accounts.
-
-Transfers are **atomic**, meaning the entire transaction succeeds or fails as one unit. Money must never be deducted from one account without being successfully added to the destination account.
-
-### 📜 Audit Trail
-
-Users will be able to view their recent transaction history, including account activity such as:
-
-* Deposits
-* Withdrawals
-* Transfers
-
-### 📝 System Logging
-
-The application will maintain a log file to track system activity.
-
-Two logging levels are required:
-
-* `INFO` — Records successful operations such as successful logins and completed transactions.
-* `ERROR` — Records failures, invalid operations, security risks or system problems such as incorrect PIN attempts or database connection failures.
-
----
-
-## 🏗️ Architecture
-
-Bank of CLI will follow a **Layered Architecture**.
+## Architecture
 
 ```text
 ┌──────────────────────────────┐
-│          API Layer           │
-│                              │
-│  CLI Input / Menus / Output  │
+│           CLI Layer          │
+│   Terminal menus / I/O       │
 └──────────────┬───────────────┘
-               │
+               │  calls only
                ▼
 ┌──────────────────────────────┐
 │        Service Layer         │
-│                              │
-│     Business Logic / Rules   │
+│   Business rules, validation │
+└──────────────┬───────────────┘
+               │  calls only
+               ▼
+┌──────────────────────────────┐
+│      Repository Layer        │
+│   SQL via a handed-in         │
+│   Connection                 │
 └──────────────┬───────────────┘
                │
                ▼
 ┌──────────────────────────────┐
-│       Repository Layer       │
-│                              │
-│     SQL / Database Access    │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│          PostgreSQL          │
-│                              │
-│       Persistent Data        │
+│          PostgreSQL           │
 └──────────────────────────────┘
 ```
 
-### 1. API Layer
+Each layer only calls the one directly below it. `Main.java` is the **composition root** — the only class that knows about every layer at once and wires concrete implementations (`PostgresAccountRepository`, `JdbcTransactionManager`, etc.) into the interfaces everything else depends on. This is Dependency Inversion applied throughout: the Service layer depends on `AccountRepository` and `TransactionManager` interfaces, never on JDBC or PostgreSQL directly.
 
-The API layer is responsible for everything the user interacts with through the terminal.
+### Transaction atomicity
 
-Responsibilities include:
+A transfer between two accounts — debit one, credit the other, write two audit rows — runs as a single database transaction via `JdbcTransactionManager`. If any step fails, everything rolls back and both accounts are left exactly as they were beforehand. `JdbcTransactionManager` is the only class in the application that calls `commit()` or `rollback()`; every repository method just executes SQL against whatever `Connection` it's handed, which is what makes multi-step operations safe to compose without duplicating transaction logic.
 
-* Reading terminal input
-* Displaying menus
-* Navigating the application
-* Displaying user-friendly messages
-* Sending requests to the Service Layer
+### Error handling
 
-The API Layer **only communicates with the Service Layer**.
+- **Business errors** (`AccountNotFoundException`, `InvalidPinException`, `InsufficientFundsException`, `InvalidAmountException`) are understood, expected failures — the user sees a specific, helpful message.
+- **Technical errors** (`DataAccessException` — a lost database connection, a failed query) never leak SQL or stack traces to the user. They see a generic `Service currently unavailable. Please try again later.` while the real detail is logged at SEVERE.
 
-### 2. Service Layer
+## Tech Stack
 
-The Service Layer contains the application's business rules and logic.
+| Technology     | Purpose                          |
+| -------------- | --------------------------------- |
+| **Java 21**    | Application development (targets Java 17 bytecode) |
+| **Maven**      | Build and dependency management   |
+| **PostgreSQL 18** | Persistent database (Dockerized) |
+| **Docker Compose** | Local database environment   |
+| **Git / GitHub** | Version control                 |
 
-Responsibilities include:
-
-* Validating banking operations
-* Enforcing account rules
-* Preventing overdrafts
-* Processing deposits and withdrawals
-* Managing transfers
-* Handling authentication logic
-* Calling the Repository Layer
-
-The Service Layer **does not directly interact with the user interface or database**.
-
-### 3. Repository Layer
-
-The Repository Layer is responsible for communication with PostgreSQL.
-
-Responsibilities include:
-
-* Executing SQL queries
-* Reading data from the database
-* Saving data to the database
-* Converting database rows into Java objects
-* Converting Java objects into database records
-
-The Repository Layer **only receives requests from the Service Layer**.
-
----
-
-## 🛠️ Tech Stack
-
-| Technology     | Purpose                         |
-| -------------- | ------------------------------- |
-| **Java**       | Application development         |
-| **Maven**      | Build and dependency management |
-| **PostgreSQL** | Persistent database             |
-| **Git**        | Version control                 |
-| **GitHub**     | Remote repository               |
-
----
-
-## 🔒 Transaction Atomicity
-
-Transfers must follow the **All-or-Nothing** principle.
-
-For example:
+## Project Structure
 
 ```text
-Account A: -$100
-       +
-Account B: +$100
-       =
-Successful Transfer
-```
-
-If the deposit into Account B fails, the withdrawal from Account A must also be rolled back.
-
-```text
-Transfer Fails
-      ↓
-Rollback
-      ↓
-Account A: unchanged
-Account B: unchanged
-```
-
-This prevents money from being lost or created during a failed transfer.
-
----
-
-## ⚠️ Error Handling
-
-The application should provide clear and user-friendly error handling.
-
-### User Errors
-
-When users make mistakes, the application should provide helpful messages.
-
-Examples:
-
-```text
-Incorrect PIN
-Insufficient funds
-Account not found
-Invalid menu selection
-Invalid transfer amount
-```
-
-### System Errors
-
-Technical problems should not expose database errors or Java stack traces directly to users.
-
-For example, if PostgreSQL becomes unavailable:
-
-```text
-User sees:
-
-Service currently unavailable. Please try again later.
-```
-
-While the system log records the technical problem:
-
-```text
-ERROR: Database connection lost
-```
-
-This keeps the application both **user-friendly and secure**.
-
----
-
-## 📁 Planned Project Structure
-
-```text
-BankofCLI/
-│
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── ...
-│   │
-│   └── test/
-│       └── java/
-│           └── ...
-│
-├── logs/
-│   └── ...
-│
+BankofCLI-App/
+├── docker/
+│   └── docker-compose.yml           — Postgres 18 dev database
+├── src/main/java/com/aaronjames/bankofcli/
+│   ├── Main.java                            — composition root / entry point
+│   ├── cli/BankCli.java                     — terminal menus
+│   ├── config/DatabaseConfig.java
+│   ├── config/ConfigLoader.java
+│   ├── db/ConnectionProvider.java (interface)
+│   ├── db/PostgresConnectionProvider.java
+│   ├── db/TransactionManager.java (interface)
+│   ├── db/JdbcTransactionManager.java
+│   ├── db/UnitOfWork.java (functional interface)
+│   ├── model/Account.java
+│   ├── model/TransactionRecord.java
+│   ├── model/TransactionType.java (enum: DEPOSIT, WITHDRAW, TRANSFER_OUT, TRANSFER_IN)
+│   ├── exception/DataAccessException.java
+│   ├── exception/BankingException.java
+│   ├── exception/AccountNotFoundException.java
+│   ├── exception/InvalidPinException.java
+│   ├── exception/InsufficientFundsException.java
+│   ├── exception/InvalidAmountException.java
+│   ├── repository/AccountRepository.java (interface)
+│   ├── repository/PostgresAccountRepository.java
+│   ├── repository/TransactionRepository.java (interface)
+│   ├── repository/PostgresTransactionRepository.java
+│   └── service/AccountService.java (interface)
+│       service/AccountServiceImpl.java
+├── src/main/resources/
+│   ├── application.properties.example    — copy to application.properties (gitignored)
+│   ├── logging.properties
+│   └── db/schema.sql
 ├── pom.xml
-├── README.md
-└── ...
+└── .gitignore
 ```
 
-The exact package and class structure will be developed as the project progresses.
+## Database Schema
 
----
+**accounts**
+| Column | Type | Notes |
+|---|---|---|
+| account_id | BIGSERIAL | PK |
+| account_holder | VARCHAR(100) | |
+| pin | VARCHAR(4) | |
+| balance | NUMERIC(19,2) | ≥ 0, enforced by a CHECK constraint |
 
-## 🚀 Getting Started
+**transactions**
+| Column | Type | Notes |
+|---|---|---|
+| transaction_id | BIGSERIAL | PK |
+| account_id | BIGINT | FK → accounts, the owning account |
+| related_account_id | BIGINT | FK → accounts, nullable — the counterparty on a transfer |
+| transaction_type | VARCHAR(20) | DEPOSIT, WITHDRAW, TRANSFER_OUT, TRANSFER_IN |
+| amount | NUMERIC(19,2) | > 0, enforced by a CHECK constraint |
+| balance_after | NUMERIC(19,2) | the account's balance immediately after this transaction |
+
+A transfer writes two rows — a `TRANSFER_OUT` on the source account and a `TRANSFER_IN` on the destination account — each pointing at the other account via `related_account_id`. Transaction history is ordered by `transaction_id DESC`, which reflects insertion order since it's a `BIGSERIAL`.
+
+## Getting Started
 
 ### Prerequisites
 
-Before running the application, make sure you have:
+- Java JDK 17+
+- Maven
+- Docker Desktop
+- Git
 
-* Java JDK installed
-* Maven installed
-* PostgreSQL installed and running
-* Git installed
-
-### Clone the Repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/aaronjames09/Java-Revature.git
+cd Java-Revature/BankofCLI/BankofCLI-App
 ```
 
-### Navigate to the Project
+### Start the database
 
 ```bash
-cd Java-Revature/BankofCLI
+cd docker
+docker compose up -d
+cd ..
 ```
 
-### Build the Project
+This starts a PostgreSQL 18 container and runs `schema.sql` automatically on first startup.
+
+### Configure your credentials
+
+Copy `src/main/resources/application.properties.example` to `application.properties` in the same folder, and fill in the values matching `docker-compose.yml`:
+
+```properties
+db.url=jdbc:postgresql://localhost:5432/bankofcli
+db.username=bankofcli_user
+db.password=<your POSTGRES_PASSWORD from docker-compose.yml>
+```
+
+`application.properties` is gitignored — your credentials never get committed.
+
+### Build
 
 ```bash
-mvn clean install
+mvn clean package
 ```
 
-### Run Tests
+This produces a runnable fat jar (PostgreSQL driver included) at `target/bank-of-cli.jar`.
+
+### Run
 
 ```bash
-mvn test
+java -jar target/bank-of-cli.jar
 ```
 
-### Run the Application
+## Project Goals
 
-The exact run command will be added once the application's entry point has been implemented.
+This project demonstrates practical experience with:
 
----
-
-## 📌 Project Status
-
-**🚧 In Development**
-
-Current focus:
-
-Project setup
-Maven configuration
-PostgreSQL database setup
-Database schema
-Repository layer
-Service layer
-API / CLI layer
-User registration
-User authentication
-Balance management
-Deposits
-Withdrawals
-Transfers
-Transaction history
-System logging
-Error handling
-Final integration testing
-
----
-
-## 🎓 Project Goals
-
-This project is intended to demonstrate practical experience with:
-
-* Object-oriented Java development
-* Layered application architecture
-* JDBC and SQL
-* PostgreSQL database integration
-* Maven project management
-* Exception and error handling
-* Database transactions
-* Logging
-* Git version control
-* Agile development practices
+- Object-oriented Java and layered application design
+- Dependency Inversion via interfaces at every layer boundary
+- JDBC and atomic multi-statement database transactions
+- PostgreSQL schema design and Docker-based local development
+- Maven project and dependency management
+- Structured exception handling (business vs. technical failures)
+- Application logging
+- Git version control

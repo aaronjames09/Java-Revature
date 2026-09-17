@@ -11,7 +11,6 @@ services:
       - "5432:5432"
     volumes:
       - bankofcli_pgdata:/var/lib/postgresql
-      - ../src/main/resources/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
 
 volumes:
   bankofcli_pgdata:

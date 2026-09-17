@@ -10,12 +10,6 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.logging.*;
 
-/**
- * The "API Layer" from the spec: reads terminal input, prints menus and
- * messages, and forwards every request to AccountService. It never builds a
- * repository, opens a connection, or writes SQL - if it needs the database,
- * it asks the Service layer.
- */
 public class BankCli {
 
     private static final Logger LOGGER = Logger.getLogger(BankCli.class.getName());
@@ -35,10 +29,18 @@ public class BankCli {
         while (running) {
             printMainMenu();
             switch (readLine()) {
-                case "1" -> handleRegister();
-                case "2" -> handleLogin();
-                case "3" -> running = false;
-                default -> System.out.println("Invalid selection. Please choose 1-3.");
+                case "1" :
+                    handleRegister();
+                    break;
+                case "2" : 
+                    handleLogin();
+                    break;
+                case "3" : 
+                    running = false;
+                    break;
+                default : 
+                    System.out.println("Invalid selection. Please choose 1-3.");
+                    break;
             }
         }
 
@@ -95,13 +97,27 @@ public class BankCli {
         while (loggedIn) {
             printAccountMenu();
             switch (readLine()) {
-                case "1" -> handleCheckBalance(account);
-                case "2" -> handleDeposit(account);
-                case "3" -> handleWithdraw(account);
-                case "4" -> handleTransfer(account);
-                case "5" -> handleHistory(account);
-                case "6" -> loggedIn = false;
-                default -> System.out.println("Invalid selection. Please choose 1-6.");
+                case "1" :
+                    handleCheckBalance(account);
+                    break;
+                case "2" :
+                    handleDeposit(account);
+                    break;
+                case "3" :
+                    handleWithdraw(account);
+                    break;
+                case "4" :
+                    handleTransfer(account);
+                    break;
+                case "5" :
+                    handleHistory(account);
+                    break;
+                case "6" :
+                    loggedIn = false;
+                    break;
+                default : 
+                    System.out.println("Invalid selection. Please choose 1-6.");
+                    break;
             }
         }
         System.out.println("Logged out.");
@@ -204,13 +220,6 @@ public class BankCli {
         }
     }
 
-    /**
-     * Every menu action goes through here. This is where the spec's "no stack traces to the
-     * user" rule is actually enforced: a BankingException means the operation was understood
-     * and rejected for a business reason, so its message goes straight to the user. Anything
-     * else (a DataAccessException, or a genuinely unexpected bug) gets logged in full and the
-     * user sees a generic, non-technical message instead.
-     */
     private void executeSafely(Runnable action) {
         try {
             action.run();

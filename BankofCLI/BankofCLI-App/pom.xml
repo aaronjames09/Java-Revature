@@ -6,22 +6,19 @@
 
     <groupId>com.aaronjames</groupId>
     <artifactId>bank-of-cli</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Bank of CLI</name>
-    <description>Terminal-based banking application with layered architecture and PostgreSQL persistence</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <postgresql.version>42.7.4</postgresql.version>
     </properties>
 
     <dependencies>
-        <!-- PostgreSQL JDBC driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

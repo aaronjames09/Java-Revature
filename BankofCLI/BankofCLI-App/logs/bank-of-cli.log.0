@@ -100,3 +100,29 @@
 2026-09-16 10:24:37 [WARNING] com.aaronjames.bankofcli.service.AccountServiceImpl - Rejected transfer from account id=1: balance=100.00, requested=200
 2026-09-16 10:24:37 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
 2026-09-16 10:24:46 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=2
+2026-09-16 11:47:03 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-16 11:47:07 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=1
+2026-09-16 11:47:19 [WARNING] com.aaronjames.bankofcli.service.AccountServiceImpl - Incorrect PIN attempt for account id=2
+2026-09-16 11:47:26 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-16 11:47:32 [INFO] com.aaronjames.bankofcli.db.JdbcTransactionManager - Transaction rolled back
+2026-09-16 11:47:35 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=2
+2026-09-16 11:47:42 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
+2026-09-17 09:15:38 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-17 09:15:46 [SEVERE] com.aaronjames.bankofcli.db.JdbcTransactionManager - Failed to open or configure a transactional connection
+2026-09-17 09:15:46 [SEVERE] com.aaronjames.bankofcli.cli.BankCli - Database operation failed
+2026-09-17 09:16:16 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=1
+2026-09-17 09:16:43 [INFO] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Updated balance for account id=1 to 120.00
+2026-09-17 09:16:43 [INFO] com.aaronjames.bankofcli.repository.PostgresTransactionRepository - Recorded DEPOSIT for account id=1 amount=20
+2026-09-17 09:16:43 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Deposited 20 into account id=1, new balance=120.00
+2026-09-17 09:16:47 [INFO] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Updated balance for account id=1 to 110.00
+2026-09-17 09:16:47 [INFO] com.aaronjames.bankofcli.repository.PostgresTransactionRepository - Recorded WITHDRAW for account id=1 amount=10
+2026-09-17 09:16:47 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Withdrew 10 from account id=1, new balance=110.00
+2026-09-17 09:17:41 [INFO] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Updated balance for account id=1 to 100.00
+2026-09-17 09:17:41 [INFO] com.aaronjames.bankofcli.repository.PostgresAccountRepository - Updated balance for account id=2 to 230.00
+2026-09-17 09:17:41 [INFO] com.aaronjames.bankofcli.repository.PostgresTransactionRepository - Recorded TRANSFER_OUT for account id=1 amount=10
+2026-09-17 09:17:41 [INFO] com.aaronjames.bankofcli.repository.PostgresTransactionRepository - Recorded TRANSFER_IN for account id=2 amount=10
+2026-09-17 09:17:41 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Transferred 10 from account id=1 to account id=2
+2026-09-17 09:17:48 [INFO] com.aaronjames.bankofcli.service.AccountServiceImpl - Successful login for account id=2
+2026-09-17 09:19:47 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
+2026-09-17 09:19:51 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI starting up
+2026-09-17 09:19:53 [INFO] com.aaronjames.bankofcli.Main - Bank of CLI shut down
