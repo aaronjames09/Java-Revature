@@ -1,0 +1,20 @@
+* {
+    padding: 30 px;
+    margin: 20 px;
+    background-color: #7c5191;
+}
+
+#header {
+    background-color: #7c5191;
+    color: rgb(244, 58, 58);
+    padding: 30px;
+    margin: 20px;
+
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    color: rgb(213, 217, 217);
+}
