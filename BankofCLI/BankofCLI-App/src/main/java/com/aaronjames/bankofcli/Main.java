@@ -45,6 +45,7 @@ public final class Main {
         TransactionRepository transactionRepository = new PostgresTransactionRepository();
         AccountService accountService =
                 new AccountServiceImpl(accountRepository, transactionRepository, transactionManager);
+        //Creating the Service Layer and adding dependencies.
 
         logger.info("Bank of CLI starting up");
 

@@ -221,6 +221,7 @@ public class BankCli {
     }
 
     private void executeSafely(Runnable action) {
+        //This is the centralized error-handling mechanism.
         try {
             action.run();
         } catch (BankingException e) {
